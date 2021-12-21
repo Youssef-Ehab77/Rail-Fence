@@ -1,0 +1,132 @@
+package sample;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
+
+import java.util.ArrayList;
+
+public class Controller {
+
+    @FXML
+    private TextField input_key;
+    @FXML
+    private TextField output_lbl;
+    @FXML
+    private TextField input_txtf;
+
+    @FXML
+    public void encode_btn_pressed() {
+
+        String input = input_txtf.getText();      //input text
+        int key = Integer.parseInt(input_key.getText()); //input key value
+        int num = 0;  //
+        boolean dir_down = true; //decide if i should go up or down in the rows of the arraylist
+        StringBuilder encode = new StringBuilder();  //output encoded text
+        //arraylist of arraylist, works kinda like 2d array but its easier to manipulate
+        ArrayList<ArrayList<Character>> railFence = new ArrayList<>();
+
+        //railFence array list can be considered as the column and then we insert arraylist equal to the value of the key to work as row
+        for (int i = 0; i < key; i++) {
+            ArrayList<Character> list = new ArrayList<>();
+            railFence.add(list);
+        }
+
+        //insert values in a zig-zag manner
+        for (int i = 0; i < input.length(); i++) {
+            if (num == key - 1) {
+                dir_down = false;
+            }
+            if (num == 0) {
+                dir_down = true;
+            }
+            railFence.get(num).add(input.charAt(i));
+
+            if (dir_down) {
+                num++;
+            } else num--;
+        }
+
+        //get all the chars row by row and append it to encode variable
+        for (int i = 0; i < key; i++) {
+            railFence.get(i).forEach(encode::append);
+        }
+
+        output_lbl.setText(String.valueOf(encode));
+    }
+
+    @FXML
+    public void decode_btn_pressed() {
+
+        /*
+         * to decode we are building a 2D array in a way looks like this
+         * *--*--*--*--*--*--*
+         * -*-*-*-*-*-*-*-*-*-
+         * --*--*--*--*--*--*-
+         * characters of the encrypted word will be filled in the star places
+         * then we will read it in a zig-zag manner
+         */
+        String encryptedWord = input_txtf.getText();
+        int key = Integer.parseInt(input_key.getText());
+        char[][] railDecode = new char[key][encryptedWord.length()];
+        boolean dir_down = true;
+        int row = 0, col = 0;
+
+        for (int i = 0; i < key; i++) {
+            for (int j = 0; j < encryptedWord.length(); j++) {
+                railDecode[i][j] = '-';
+            }
+        }
+
+        // mark the places with '*'
+        for (int i = 0; i < encryptedWord.length(); i++) {
+            // check the direction of flow
+            if (row == 0)
+                dir_down = true;
+            if (row == key - 1)
+                dir_down = false;
+
+            // place the marker
+            railDecode[row][col++] = '*';
+
+            // find the next row using direction flag
+            if (dir_down) {
+                row++;
+            } else {
+                row--;
+            }
+        }
+
+        int index = 0;
+        for (int i = 0; i < key; i++)
+            for (int j = 0; j < encryptedWord.length(); j++)
+                if (railDecode[i][j] == '*' && index < encryptedWord.length())
+                    railDecode[i][j] = encryptedWord.charAt(index++);
+
+
+        // now read the matrix in zig-zag manner
+        StringBuilder result = new StringBuilder();
+        row = 0;
+        col = 0;
+
+        for (int i = 0; i < encryptedWord.length(); i++) {
+            // check the direction of flow
+            if (row == 0)
+                dir_down = true;
+            if (row == key - 1)
+                dir_down = false;
+
+            // place the marker
+            if (railDecode[row][col] != '-')
+                result.append(railDecode[row][col++]);
+
+            // find the next row using direction flag
+            if (dir_down) {
+                row++;
+            } else {
+                row--;
+            }
+        }
+
+        output_lbl.setText(result.toString());
+    }
+}

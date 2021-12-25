@@ -6,7 +6,7 @@ This is not the traditional rail fence algorithm it's a bit different and the ou
 I added .txt file that contains the normal Rail fence code.
 
 -->  .exe file link ("Needs JRE version 1.4.0 atleat to run").
-https://drive.google.com/file/d/1es-_p30Qgn1HbgCyREv5G68UHSgPvTjs/view?usp=sharing
+https://drive.google.com/file/d/1R27s3UYuxRidnnzajppz9OguCWH_v0-f/view?usp=sharing
 
 <h1>Image of the running application:<h1>
 

@@ -10,4 +10,4 @@ https://drive.google.com/file/d/1es-_p30Qgn1HbgCyREv5G68UHSgPvTjs/view?usp=shari
 
 <h1>Image of the running application:<h1>
 
-![Running App](https://user-images.githubusercontent.com/82692312/146852765-a76af9e1-03b5-4d75-aa7a-d9568e72688e.JPG)
+![Running App ](https://user-images.githubusercontent.com/82692312/147388476-7482e40a-132e-4e13-a5f3-f15b00f76125.JPG)
